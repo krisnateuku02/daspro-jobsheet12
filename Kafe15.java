@@ -5,14 +5,31 @@ public class Kafe15 {
         Scanner sc = new Scanner(System.in);
         Menu("Andi", true);
 
-        System.out.print("\nMasukkan nomor menu yang ingin Anda pesan: ");
-        int pilihanMenu = sc.nextInt();
-        System.out.print("Masukkan jumlah item yang ingin dipesan: ");
-        int banyakItem = sc.nextInt();
+        int totalKeseluruhan = 0;
+        String lanjut;
 
-        int totalBayar = hitungTotalHarga15(pilihanMenu, banyakItem);
+        do {
+            System.out.print("\nMasukkan nomor menu yang ingin Anda pesan: ");
+            int pilihanMenu = sc.nextInt();
 
-        System.out.println("Total harga untuk pesanan Anda: Rp" + totalBayar);
+            if (pilihanMenu < 1 || pilihanMenu > 6) {
+                System.out.println("Menu tidak tersedia");
+                lanjut = "y";
+                continue;
+            }
+
+            System.out.print("Masukkan jumlah item yang ingin dipesan: ");
+            int banyakItem = sc.nextInt();
+
+            int subtotal = hitungTotalHarga15(pilihanMenu, banyakItem);
+            totalKeseluruhan += subtotal;
+            System.out.println("Subtotal item ini: Rp" + subtotal);
+
+            System.out.print("Apakah ingin memesan menu lain? (y/n): ");
+            lanjut = sc.next();
+        } while (lanjut.equalsIgnoreCase("y"));
+
+        System.out.println("Total keseluruhan pesanan Anda: Rp" + totalKeseluruhan);
         sc.close();
     }
 
