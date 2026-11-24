@@ -2,39 +2,50 @@ import java.util.Scanner;
 
 public class RekapLaundry15 {
 
-    static String[] hari = {"Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"};
+    static String buatLabelHari(int idxHari) {
+        return "Hari ke-" + (idxHari + 1);
+    }
 
-    // Menginputkan data berat cucian setiap layanan untuk setiap hari
+    static void inputLayanan(String[] layanan, int[] hargaPerKg, Scanner sc) {
+        sc.nextLine(); // membersihkan sisa newline
+        for (int i = 0; i < layanan.length; i++) {
+            System.out.print("Masukkan nama layanan ke-" + (i + 1) + ": ");
+            layanan[i] = sc.nextLine();
+            System.out.print("Masukkan harga per kg untuk " + layanan[i] + " (Rp): ");
+            hargaPerKg[i] = sc.nextInt();
+            sc.nextLine(); // membersihkan sisa newline
+        }
+    }
+
     static void inputData(int[][] data, String[] layanan, Scanner sc) {
         System.out.println("\n=== INPUT DATA BERAT CUCIAN (KG) ===");
         for (int i = 0; i < layanan.length; i++) {
             System.out.println("Layanan: " + layanan[i]);
             for (int j = 0; j < data[i].length; j++) {
-                System.out.print("  " + hari[j] + " (kg): ");
+                System.out.print("  " + buatLabelHari(j) + " (kg): ");
                 data[i][j] = sc.nextInt();
             }
         }
     }
 
-    // Menampilkan seluruh data dalam bentuk tabel
     static void tampilTabel(String[] layanan, int[] hargaPerKg, int[][] data) {
+        int jumlahHari = data[0].length;
         System.out.println("\n=== REKAP BERAT CUCIAN LAUNDRY (KG) ===");
         System.out.printf("%-16s %-12s", "Layanan", "Harga/kg");
-        for (String h : hari) {
-            System.out.printf("%-8s", h);
+        for (int j = 0; j < jumlahHari; j++) {
+            System.out.printf("%-11s", buatLabelHari(j));
         }
         System.out.println();
 
         for (int i = 0; i < layanan.length; i++) {
             System.out.printf("%-16s Rp%-10d", layanan[i], hargaPerKg[i]);
-            for (int j = 0; j < data[i].length; j++) {
-                System.out.printf("%-8d", data[i][j]);
+            for (int j = 0; j < jumlahHari; j++) {
+                System.out.printf("%-11d", data[i][j]);
             }
             System.out.println();
         }
     }
 
-    // Mengembalikan total berat cucian satu layanan selama 6 hari
     static int totalPerLayanan(int[][] data, int idxLayanan) {
         int total = 0;
         for (int j = 0; j < data[idxLayanan].length; j++) {
@@ -43,7 +54,6 @@ public class RekapLaundry15 {
         return total;
     }
 
-    // Menampilkan layanan dengan total berat cucian tertinggi (nama layanan dan totalnya)
     static void tampilLayananTertinggi(String[] layanan, int[][] data) {
         int idxTerbanyak = 0;
         int maxTotal = totalPerLayanan(data, 0);
@@ -61,7 +71,6 @@ public class RekapLaundry15 {
         System.out.println("- Total   : " + maxTotal + " kg");
     }
 
-    // Mengembalikan indeks hari dengan total berat cucian terbesar
     static int hariTersibuk(int[][] data) {
         int jumlahHari = data[0].length;
         int idxHariTerbanyak = 0;
@@ -85,8 +94,8 @@ public class RekapLaundry15 {
         return idxHariTerbanyak;
     }
 
-    // Menghitung dan menampilkan pendapatan setiap layanan serta total pendapatan selama 6 hari
     static void tampilPendapatan(String[] layanan, int[] hargaPerKg, int[][] data) {
+        int jumlahHari = data[0].length;
         System.out.println("\n=== PENDAPATAN PER LAYANAN ===");
         long totalPendapatan = 0;
 
@@ -99,26 +108,24 @@ public class RekapLaundry15 {
         }
 
         System.out.println("--------------------------------------------------");
-        System.out.println("Total pendapatan selama 6 hari : Rp" + totalPendapatan);
+        System.out.println("Total pendapatan selama " + jumlahHari + " hari : Rp" + totalPendapatan);
     }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        String[] layanan = {"Cuci Kering", "Cuci Setrika", "Setrika Saja", "Express"};
-        int[] hargaPerKg = {6000, 8000, 5000, 12000};
-        int[][] dataBerat = {
-            {12, 15, 10, 18, 20, 25},
-            {20, 18, 22, 15, 30, 35},
-            {8,  5,  10, 7,  6,  12},
-            {3,  6,  2,  5,  8,  10}
-        };
+        System.out.print("Masukkan jumlah layanan: ");
+        int jumlahLayanan = sc.nextInt();
 
-        System.out.print("Apakah ingin menginput ulang data berat cucian? (y/n): ");
-        String jawab = sc.next();
-        if (jawab.equalsIgnoreCase("y")) {
-            inputData(dataBerat, layanan, sc);
-        }
+        System.out.print("Masukkan jumlah hari: ");
+        int jumlahHari = sc.nextInt();
+
+        String[] layanan = new String[jumlahLayanan];
+        int[] hargaPerKg = new int[jumlahLayanan];
+        int[][] dataBerat = new int[jumlahLayanan][jumlahHari];
+
+        inputLayanan(layanan, hargaPerKg, sc);
+        inputData(dataBerat, layanan, sc);
 
         tampilTabel(layanan, hargaPerKg, dataBerat);
 
@@ -130,7 +137,7 @@ public class RekapLaundry15 {
         tampilLayananTertinggi(layanan, dataBerat);
 
         int idxSibuk = hariTersibuk(dataBerat);
-        System.out.println("\nHari tersibuk: " + hari[idxSibuk]);
+        System.out.println("\nHari tersibuk: " + buatLabelHari(idxSibuk));
 
         tampilPendapatan(layanan, hargaPerKg, dataBerat);
 
