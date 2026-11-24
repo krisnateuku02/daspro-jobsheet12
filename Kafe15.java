@@ -1,7 +1,8 @@
 public class Kafe15 {
     public static void main(String[] args) {
         Menu();
-
+        Menu();
+        Menu();
     }
 
     public static void Menu() {
