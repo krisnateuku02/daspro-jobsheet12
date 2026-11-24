@@ -1,10 +1,7 @@
-import java.util.Scanner;
-
 public class HitungBalok15 {
 
     static int hitungLuas(int pjg, int lb) {
-        int Luas = pjg * lb;
-        return Luas;
+        return pjg * lb;
     }
 
     static int hitungVolume(int tinggi, int a, int b) {
@@ -12,26 +9,22 @@ public class HitungBalok15 {
         return volume;
     }
 
+    static int kurang(int a, int b) {
+        return a - b;
+    }
+
     public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
+        int p = 4;
+        int l = 3;
+        int t = 5;
 
-        int p, l, t, L, vol;
+        int volBenar = hitungVolume(t, p, l);
+        int volTertukar = hitungVolume(p, l, t);
 
-        System.out.println("Masukkan panjang");
-        p = input.nextInt();
+        System.out.println("hitungVolume(t, p, l) = " + volBenar);
+        System.out.println("hitungVolume(p, l, t) = " + volTertukar);
 
-        System.out.println("Masukkan lebar");
-        l = input.nextInt();
-
-        System.out.println("Masukkan tinggi");
-        t = input.nextInt();
-
-        L = hitungLuas(p, l);
-        System.out.println("Luas Persegi Panjang adalah " + L);
-
-        vol = hitungVolume(t, p, l);
-        System.out.println("Volume Balok adalah " + vol);
-
-        input.close();
+        System.out.println("kurang(10, 3) = " + kurang(10, 3));
+        System.out.println("kurang(3, 10) = " + kurang(3, 10));
     }
 }
