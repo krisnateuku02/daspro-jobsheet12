@@ -1,24 +1,31 @@
 public class HitungBalok15 {
+
+    static int hitungLuas(int pjg, int lb) {
+        int Luas = pjg * lb;
+        return Luas;
+    }
+
+    static int hitungVolume(int tinggi, int a, int b) {
+        int volume = hitungLuas(a, b) * tinggi;
+        return volume;
+    }
+
+    static int hitungLuasPermukaanBalok(int p, int l, int t) {
+        return 2 * (hitungLuas(p, l) + hitungLuas(p, t) + hitungLuas(l, t));
+    }
+
+    public static void prosesBalok(int ke, int p, int l, int t) {
+        int luasPermukaan = hitungLuasPermukaanBalok(p, l, t);
+        int volume = hitungVolume(t, p, l);
+
+        System.out.println("=== Balok ke-" + ke + " ===");
+        System.out.println("Luas Permukaan Balok : " + luasPermukaan);
+        System.out.println("Volume Balok         : " + volume);
+    }
+
     public static void main(String[] args) {
-        int p1 = 4, l1 = 3, t1 = 5;
-        int luasPermukaan1 = 2 * (p1 * l1 + p1 * t1 + l1 * t1);
-        int volume1 = p1 * l1 * t1;
-        System.out.println("=== Balok ke-1 ===");
-        System.out.println("Luas Permukaan Balok : " + luasPermukaan1);
-        System.out.println("Volume Balok         : " + volume1);
-
-        int p2 = 6, l2 = 2, t2 = 4;
-        int luasPermukaan2 = 2 * (p2 * l2 + p2 * t2 + l2 * t2);
-        int volume2 = p2 * l2 * t2;
-        System.out.println("=== Balok ke-2 ===");
-        System.out.println("Luas Permukaan Balok : " + luasPermukaan2);
-        System.out.println("Volume Balok         : " + volume2);
-
-        int p3 = 10, l3 = 5, t3 = 3;
-        int luasPermukaan3 = 2 * (p3 * l3 + p3 * t3 + l3 * t3);
-        int volume3 = p3 * l3 * t3;
-        System.out.println("=== Balok ke-3 ===");
-        System.out.println("Luas Permukaan Balok : " + luasPermukaan3);
-        System.out.println("Volume Balok         : " + volume3);
+        prosesBalok(1, 4, 3, 5);
+        prosesBalok(2, 6, 2, 4);
+        prosesBalok(3, 10, 5, 3);
     }
 }
