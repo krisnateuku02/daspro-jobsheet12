@@ -21,15 +21,26 @@ public class Kafe15 {
             System.out.print("Masukkan jumlah item yang ingin dipesan: ");
             int banyakItem = sc.nextInt();
 
-            int subtotal = hitungTotalHarga15(pilihanMenu, banyakItem);
-            totalKeseluruhan += subtotal;
-            System.out.println("Subtotal item ini: Rp" + subtotal);
+            totalKeseluruhan += hitungTotalHarga15(pilihanMenu, banyakItem);
 
             System.out.print("Apakah ingin memesan menu lain? (y/n): ");
             lanjut = sc.next();
         } while (lanjut.equalsIgnoreCase("y"));
 
-        System.out.println("Total keseluruhan pesanan Anda: Rp" + totalKeseluruhan);
+        System.out.print("Masukkan kode promo: ");
+        String kodePromo = sc.next();
+
+        System.out.print("Apakah pelanggan member? (true/false): ");
+        boolean isMember = sc.nextBoolean();
+
+        int besarDiskon = hitungDiskon(totalKeseluruhan, kodePromo, isMember);
+        int totalBayar = totalKeseluruhan - besarDiskon;
+
+        System.out.println("\n=== RINGKASAN PEMBAYARAN ===");
+        System.out.println("Total harga   : Rp" + totalKeseluruhan);
+        System.out.println("Besar diskon  : Rp" + besarDiskon);
+        System.out.println("Total bayar   : Rp" + totalBayar);
+
         sc.close();
     }
 
@@ -56,5 +67,24 @@ public class Kafe15 {
 
         int hargaTotal = hargaItems[pilihanMenu - 1] * banyakItem;
         return hargaTotal;
+    }
+
+    public static int hitungDiskon(int total, String kodePromo, boolean isMember) {
+        int diskonPromo = 0;
+
+        if (kodePromo.equals("DISKON50")) {
+            diskonPromo = (total * 50) / 100;
+        } else if (kodePromo.equals("DISKON30")) {
+            diskonPromo = (total * 30) / 100;
+        } else {
+            System.out.println("Kode promo invalid");
+        }
+
+        int diskonMember = 0;
+        if (isMember) {
+            diskonMember = (total * 10) / 100;
+        }
+
+        return diskonPromo + diskonMember;
     }
 }
