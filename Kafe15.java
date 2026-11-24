@@ -16,3 +16,4 @@ public class Kafe15 {
         System.out.println("Silakan pilih menu yang Anda inginkan.");
     }
 }
+
